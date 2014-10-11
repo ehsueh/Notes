@@ -1,0 +1,85 @@
+Chapter 3 Image Processing
+--------------------------
+
+Motivation
+To preprocess the image, convert it into some form that allows further analysis.
+E.g. of conversion operations:
+	- exposure correction
+	- colour balancing
+	- reduction of img noicse
+	- increase sharpnesss
+	- straightening img
+
+Overview
+	[3.1] Point operators 
+		- transformations that manipulate each pixels independently of its neighbour pixels.
+	[3.2-3.3] Neighbourhood (area-based) operators 
+		- new pixel's value depends on a small neighbourhood of input values.
+		[3.4] E.g. fourier transformation
+	[3.5] Cascading Operators (e.g. into img pyramids and wavelets)
+	[3.6] Global Operators (e.g. geometric transformations) 
+	[3.7] Global Optimization 
+		- minimization of energy functional/optimal estimation with Bayesian Markov random field models. 
+
+3.1 Point Operators
+
+	Pixel A's old value (input) --> Point Operator --> Pixel A's new value (output)
+
+	Examples of point operators (point processes):
+		- brightness and contrast adjustments
+		- colour correction
+
+	Overview
+		- image compositing and matting
+		- histogram equalization
+		- tonal values manipulation
+
+Chapter 4 Feature Detection and Matching
+----------------------------------------
+
+Keypoint features:
+- can be matched even when occluded
+- can be matched even when orientation changed
+
+4.1 Points and Patches
+
+		i. Two main approaches in identifying feature points and their correspondences:
+			1) Locate features that can be tracked using local search techniques (e.g. least square, correlation....)
+				- for neaby viewpoints or images in video sequences (rapid succession)
+			2) Independently detect features in all images then match based on local appearance
+				- for large amount of motion or appearance change. E.g: 
+					- for stiching toegether panoramas
+					- wide baseline stereo
+					- obj recognition
+				
+		ii. Stages of keypoint detection:
+			1) Feature extraction - detection of spots in image that are more likely to match well.
+			2) Feature description - convert regions around keypoints to compact and invariant descriptors.
+			3) Feature matching - search for matching candidates.
+			4) Feature tracking - instead of stage 3, one searches only a small neighbourhood around features detected.
+					    - suited for video processing
+
+	4.1.1 Feature Detectors
+		
+		i. Examples of bad features:
+			- textureless patches
+			- straight lines --> APERTURE PROBLEM: cannot align the patch along the direction of the edge direction (i.e. points can slide up and down the edge)
+		ii. What are good features to track?
+			1) "Good" features = image spots where we can reliably find correspondences with other images
+			2) e.g. patches with gradient in at least two significantly different orientations 
+		iii. A simple matching criterion for comparing 2 img patches from images $I_1$ and $I_0$:
+			weighted summed square difference (aka SSD surface)
+			$$E_{WSSD}(u) = \Sigma_i w(x_i)[I_1(x_i + u) - I_0(x_i)]^2$$
+			Note: u = (u,v) is the displacement vector, w(x) is the weight
+		iv. Auto-correlation function 
+			$$E_{AC}(\Delta u) = \Sigma_i w(x_i)[I_o(x_i + \Delta u) - I_0(x_i)]^2$$
+			Note: plotting this function as a surface plot, the strong min represents good keypoint feature i.e. patches that can be well localized and reliably matched
+		v. Ways to computing image gradient:
+			1) Classic Harris detector filter [-2 -1 0 1 2]
+			2) convoluve image with horizontal and vertical Gaussian derivaties with \sigma = 1
+		vi. Auto-correlation matrix A
+			$$ A = w * \begin{pmatrix}
+					I_x^2 & I_xI_y\\
+					I_xI_y & I_y^2\\
+					\end{pmatrix}$$
+			
