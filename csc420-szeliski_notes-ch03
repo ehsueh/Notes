@@ -1,0 +1,34 @@
+Image Processing
+
+Motivation
+To preprocess the image, convert it into some form that allows further analysis.
+E.g. of conversion operations:
+	- exposure correction
+	- colour balancing
+	- reduction of img noicse
+	- increase sharpnesss
+	- straightening img
+
+Overview
+	[3.1] Point operators 
+		- transformations that manipulate each pixels independently of its neighbour pixels.
+	[3.2-3.3] Neighbourhood (area-based) operators 
+		- new pixel's value depends on a small neighbourhood of input values.
+		[3.4] E.g. fourier transformation
+	[3.5] Cascading Operators (e.g. into img pyramids and wavelets)
+	[3.6] Global Operators (e.g. geometric transformations) 
+	[3.7] Global Optimization 
+		- minimization of energy functional/optimal estimation with Bayesian Markov random field models. 
+
+3.1 Point Operators
+
+	Pixel A's old value (input) --> Point Operator --> Pixel A's new value (output)
+
+	Examples of point operators (point processes):
+		- brightness and contrast adjustments
+		- colour correction
+
+	Overview
+		- image compositing and matting
+		- histogram equalization
+		- tonal values manipulation
