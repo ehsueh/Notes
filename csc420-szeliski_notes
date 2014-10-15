@@ -33,6 +33,29 @@ Overview
 		- image compositing and matting
 		- histogram equalization
 		- tonal values manipulation
+		
+	3.1.1 Pixel transforms
+	
+		A general image processing opeprator: a func taking one or more input images and proudce an output image.
+			g(x) = h(f(x)) or 
+		 	g(x) = h(f_0(x), .... f_n(x))
+		where x in the D-dimensional domain of functions  (usually D=2 for images)
+		and f and g operate over some range (scalar or vector-valued)
+		
+		For discrete(sampled) imgs: domain = a finite # of pixel locationss, x=(i,j)
+			g(i,j) = h(f(i,j))
+		
+		2 Common point processes: Multiplication and addition by constant.
+			g(x) = af(x) + b , a>0
+		
+		a = gain = contrast
+		b = bias = brightness
+		Note: a and b can also be some function of x (i.e. vary spatially).
+				e.g. of this --> graded desity filter
+		
+		Multiplicative gain obeys the superposition principle (i.e. h(f_0 + f_1) = h(f_0) + h(f_1)) 
+		=> multiplicative gain is a linear operator.
+
 
 Chapter 4 Feature Detection and Matching
 ----------------------------------------
